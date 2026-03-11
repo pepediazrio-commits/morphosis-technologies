@@ -109,11 +109,6 @@ export default function Home() {
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-sky-100/60 rounded-full blur-3xl" />
 
         <div className="relative max-w-6xl mx-auto px-6 pt-28 pb-24 text-center">
-          <div className="inline-flex items-center gap-2 bg-sky-50 border border-sky-100 text-sky-700 text-xs font-semibold px-3 py-1.5 rounded-full mb-8">
-            <span className="w-1.5 h-1.5 rounded-full bg-sky-500 animate-pulse" />
-            Founded in Madrid, Spain · Active projects globally
-          </div>
-
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold text-slate-900 leading-[1.08] tracking-tight max-w-4xl mx-auto">
             Software that thinks,<br />
             <span className="bg-gradient-to-r from-sky-500 to-indigo-600 bg-clip-text text-transparent">
