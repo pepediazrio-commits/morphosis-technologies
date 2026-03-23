@@ -1,67 +1,90 @@
 import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { Menu, X } from 'lucide-react'
+import { Menu, X, Home, Briefcase, Users, Mail } from 'lucide-react'
+import { TubelightNavBar } from './ui/tubelight-navbar'
 
-const links = [
+const navItems = [
+  { name: 'Home', url: '/', icon: Home },
+  { name: 'Services', url: '/services', icon: Briefcase },
+  { name: 'Team', url: '/team', icon: Users },
+  { name: 'Contact', url: '/contact', icon: Mail },
+]
+
+const mobileLinks = [
+  { label: 'Home', to: '/' },
   { label: 'Services', to: '/services' },
-  { label: 'About', to: '/about' },
   { label: 'Team', to: '/team' },
   { label: 'Contact', to: '/contact' },
 ]
 
 export default function Navbar() {
   const [open, setOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
   const location = useLocation()
-
-  useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 20)
-    window.addEventListener('scroll', handler)
-    return () => window.removeEventListener('scroll', handler)
-  }, [])
 
   useEffect(() => setOpen(false), [location])
 
-  return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white/95 backdrop-blur-sm shadow-sm border-b border-slate-100' : 'bg-transparent'}`}>
-      <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-        <Link to="/" className="flex items-center">
-          <img src="/logo.png" alt="Morphosis Technologies" className="h-10 w-auto" />
-        </Link>
+  if (location.pathname === '/contact') return null
 
-        <nav className="hidden md:flex items-center gap-8">
-          {links.map((l) => (
-            <Link
-              key={l.to}
-              to={l.to}
-              className={`text-sm font-medium transition-colors duration-150 ${location.pathname === l.to ? 'text-sky-600' : 'text-slate-600 hover:text-slate-900'}`}
-            >
-              {l.label}
-            </Link>
-          ))}
-          <Link
-            to="/contact"
-            className="bg-slate-900 hover:bg-slate-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors duration-150"
-          >
+  return (
+    <header className="relative z-50">
+      <div className="px-14 h-[88px] flex items-center">
+        {/* Left: Logo — flex-1 so it takes equal space as the right side */}
+        <div className="flex-1 flex items-center">
+          <Link to="/" className="flex items-center gap-3 flex-shrink-0">
+            <img
+              src="/logo-icon.png"
+              alt="Morphosis Technologies"
+              className="w-auto object-contain"
+              style={{ height: '60px', maxHeight: '60px', background: 'none' }}
+            />
+            <div className="flex flex-col leading-none gap-[4px]">
+              <span className="text-white font-black text-[20px]" style={{ fontFamily: "'Montserrat', sans-serif", letterSpacing: '0.12em' }}>MORPHOSIS</span>
+              <span className="font-black text-[10px] text-white" style={{ fontFamily: "'Montserrat', sans-serif", letterSpacing: '0.45em' }}>TECHNOLOGIES</span>
+            </div>
+          </Link>
+        </div>
+
+        {/* Center: Tubelight nav — shrinks to its own width, stays centered */}
+        <div className="hidden md:flex flex-shrink-0 items-center">
+          <TubelightNavBar items={navItems} className="static translate-x-0 translate-y-0 bottom-auto top-auto pt-0 sm:pt-0 mb-0" />
+        </div>
+
+        {/* Right: CTA — flex-1 pushes button to far right */}
+        <div className="flex-1 hidden md:flex items-center justify-end">
+          <Link to="/contact" className="btn-brand !text-base !py-[11px] !px-6 !rounded-lg">
             Get in touch
           </Link>
-        </nav>
+        </div>
 
-        <button onClick={() => setOpen(!open)} className="md:hidden p-2 text-slate-600 hover:text-slate-900 cursor-pointer">
+        {/* Mobile hamburger */}
+        <button
+          onClick={() => setOpen(!open)}
+          className="md:hidden ml-auto p-2 text-white/70 hover:text-white transition-colors cursor-pointer focus-visible:outline-none"
+          aria-label="Toggle menu"
+        >
           {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
         </button>
       </div>
 
+      {/* Mobile menu */}
       {open && (
-        <div className="md:hidden bg-white border-b border-slate-100 px-6 py-4 space-y-3">
-          {links.map((l) => (
-            <Link key={l.to} to={l.to} className="block text-sm font-medium text-slate-700 py-1.5">
+        <div className="md:hidden px-6 py-5 space-y-1" style={{ backdropFilter: 'blur(12px)', background: 'rgba(6, 4, 30, 0.7)', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
+          {mobileLinks.map((l) => (
+            <Link
+              key={l.to}
+              to={l.to}
+              className={`block font-display text-sm font-medium py-2.5 transition-colors ${
+                location.pathname === l.to ? 'text-white' : 'text-white/65 hover:text-white'
+              }`}
+            >
               {l.label}
             </Link>
           ))}
-          <Link to="/contact" className="block w-full text-center bg-slate-900 text-white text-sm font-semibold px-4 py-2.5 rounded-lg mt-2">
-            Get in touch
-          </Link>
+          <div className="pt-3">
+            <Link to="/contact" className="btn-brand w-full justify-center text-sm !py-3">
+              Get in touch
+            </Link>
+          </div>
         </div>
       )}
     </header>

@@ -1,28 +1,32 @@
 import { Link } from 'react-router-dom'
-import { Mail, MapPin } from 'lucide-react'
+import { Mail, ArrowUpRight } from 'lucide-react'
 
 export default function Footer() {
   return (
-    <footer className="bg-slate-950 text-slate-400">
-      <div className="max-w-6xl mx-auto px-6 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
+    <footer className="text-white">
+      <div className="max-w-6xl mx-auto px-6 pt-16 pb-8">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 pb-12 border-b border-white/[0.06]">
+
           {/* Brand */}
-          <div className="md:col-span-2">
-            <div className="flex items-center gap-2.5 mb-4">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-sky-500 to-indigo-600 flex items-center justify-center">
-                <span className="text-white font-bold text-sm">M</span>
+          <div className="md:col-span-5">
+            <Link to="/" className="flex items-center gap-3 flex-shrink-0 mb-5">
+              <img src="/logo-icon.png" alt="Morphosis Technologies" className="w-auto object-contain" style={{ height: '52px', maxHeight: '52px', background: 'none' }} />
+              <div className="flex flex-col leading-none gap-[3px]">
+                <span className="text-white font-black text-[17px]" style={{ fontFamily: "'Montserrat', sans-serif", letterSpacing: '0.12em' }}>MORPHOSIS</span>
+                <span className="font-black text-[8.5px] text-white" style={{ fontFamily: "'Montserrat', sans-serif", letterSpacing: '0.45em' }}>TECHNOLOGIES</span>
               </div>
-              <span className="font-bold text-white text-base tracking-tight">Morphosis<span className="text-sky-400">.</span></span>
-            </div>
-            <p className="text-sm leading-relaxed max-w-xs text-slate-500">
-              We are the bridge between your business and the future — building custom AI and blockchain solutions that are uniquely designed for each client's context.
+            </Link>
+            <p className="text-sm leading-[1.75] max-w-xs" style={{ color: '#ffffff' }}>
+              We don't adapt your business to technology. We build the right technology around your business.
             </p>
-            <div className="flex items-center gap-1.5 mt-4 text-sm">
-              <MapPin className="w-3.5 h-3.5 text-sky-500 flex-shrink-0" />
-              <span>Founded in Madrid, Spain · Active projects globally</span>
-            </div>
-            <div className="flex gap-3 mt-5">
-              <a href="mailto:hello@morphosis.tech" className="flex items-center gap-2 text-xs bg-slate-800 hover:bg-slate-700 px-3 py-2 rounded-lg transition-colors cursor-pointer">
+            <div className="mt-4">
+              <a
+                href="mailto:hello@morphosis.tech"
+                className="inline-flex items-center gap-2 text-xs font-medium px-3.5 py-2 rounded-lg transition-colors cursor-pointer"
+                style={{ background: 'rgba(255,255,255,0.06)', color: '#ffffff' }}
+                onMouseOver={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.10)')}
+                onMouseOut={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.06)')}
+              >
                 <Mail className="w-3.5 h-3.5" />
                 hello@morphosis.tech
               </a>
@@ -30,31 +34,59 @@ export default function Footer() {
           </div>
 
           {/* Links */}
-          <div>
-            <h4 className="text-white text-sm font-semibold mb-4">Company</h4>
-            <ul className="space-y-2.5 text-sm">
-              <li><Link to="/about" className="hover:text-white transition-colors">About us</Link></li>
-              <li><Link to="/team" className="hover:text-white transition-colors">Team</Link></li>
-              <li><Link to="/services" className="hover:text-white transition-colors">Services</Link></li>
-              <li><Link to="/contact" className="hover:text-white transition-colors">Contact</Link></li>
+          <div className="md:col-span-3 md:col-start-7">
+            <h4 className="font-display text-xs font-semibold uppercase tracking-widest mb-5" style={{ color: '#ffffff' }}>Company</h4>
+            <ul className="space-y-3 text-sm">
+              {[
+                { label: 'About us', to: '/about' },
+                { label: 'Our team', to: '/team' },
+                { label: 'Services', to: '/services' },
+                { label: 'Contact', to: '/contact' },
+              ].map(({ label, to }) => (
+                <li key={to}>
+                  <Link
+                    to={to}
+                    className="transition-colors duration-150 hover:text-white flex items-center gap-1.5 group"
+                    style={{ color: '#ffffff' }}
+                  >
+                    {label}
+                    <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
           {/* Services */}
-          <div>
-            <h4 className="text-white text-sm font-semibold mb-4">Services</h4>
-            <ul className="space-y-2.5 text-sm">
-              <li><Link to="/services#ai" className="hover:text-white transition-colors">AI Development</Link></li>
-              <li><Link to="/services#blockchain" className="hover:text-white transition-colors">Blockchain Development</Link></li>
-              <li><Link to="/services#software" className="hover:text-white transition-colors">Custom Software</Link></li>
-              <li><Link to="/services#automation" className="hover:text-white transition-colors">Automation</Link></li>
-              <li><Link to="/services#mvp" className="hover:text-white transition-colors">MVP & Strategy</Link></li>
+          <div className="md:col-span-4 md:col-start-10">
+            <h4 className="font-display text-xs font-semibold uppercase tracking-widest mb-5" style={{ color: '#ffffff' }}>Services</h4>
+            <ul className="space-y-3 text-sm">
+              {[
+                { label: 'AI Development', to: '/services#ai' },
+                { label: 'Blockchain', to: '/services#blockchain' },
+                { label: 'Custom Software', to: '/services#software' },
+                { label: 'Automation', to: '/services#automation' },
+              ].map(({ label, to }) => (
+                <li key={to}>
+                  <Link
+                    to={to}
+                    className="transition-colors duration-150 hover:text-white flex items-center gap-1.5 group"
+                    style={{ color: '#ffffff' }}
+                  >
+                    {label}
+                    <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
 
-        <div className="border-t border-slate-800 mt-12 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-600">
-          <span>© 2026 Morphosis Technologies S.L. All rights reserved.</span>
+        {/* Bottom bar */}
+        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <span className="text-xs" style={{ color: '#ffffff' }}>
+            © 2026 Morphosis Technologies S.L. All rights reserved.
+          </span>
         </div>
       </div>
     </footer>
